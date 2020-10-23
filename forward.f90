@@ -5,11 +5,13 @@ implicit none
 	real(8), parameter :: dx = 1
 	integer, parameter :: nx = int(xend/dx)
 
+
 contains
 
 	subroutine forward_problem(xx,V)
 
 		implicit none
+
 		real(8), parameter :: rho = 920.0
 		real(8), parameter :: g = 9.2
 		real(8), parameter :: n = 3
