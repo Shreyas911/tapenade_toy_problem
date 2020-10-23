@@ -1,13 +1,16 @@
 program driver
 	
-	use forward_diff
+	use forward_diff, n => nx, fp => forward_problem !! Alias to a local variable
+	use forward_tgt, n_useless => nx, fp_useless => forward_problem
+
 	implicit none 
-	real(8), dimension(nx+1) :: xx=0., xx_tlm =0., xxb =0., xx_fd, accuracy
+
+	real(8), dimension(n+1) :: xx=0., xx_tlm =0., xxb =0., xx_fd, accuracy
 	real(8) :: V=0., Vb = 1., V_forward, Vd = 0.
 	real(8), parameter :: eps = 1.d-7
 	integer :: ii
 
-	call forward_problem(xx,V)
+	call fp(xx,V)
 
 	!! Forward run
 	V_forward = V
@@ -20,7 +23,7 @@ program driver
 
 	print *, "#    Reverse    FD    Tangent    Relative accuracy"
 	!! Finite differences and Tangent Linear Model
-	do ii = 1, nx+1
+	do ii = 1, n+1
 
 		xx = 0.
 		V = 0.
@@ -28,14 +31,14 @@ program driver
 		xx_tlm(ii) = 1.
 
 		!! TLM
-		!call forward_problem_d(xx,xx_tlm,V,Vd)
+		call forward_problem_d(xx,xx_tlm,V,Vd)
 
 
 		!! FD
 		xx = 0.
 		V = 0.
 		xx(ii) = eps
-		call forward_problem(xx,V)
+		call fp(xx,V)
 		xx_fd(ii) =  (V - V_forward)/eps
 
         if ( xx_fd(ii).NE. 0. ) then
