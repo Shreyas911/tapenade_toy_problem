@@ -15,8 +15,9 @@ $(EXEC): $(OBJ) adBuffer.o adStack.o
 %.o: %.f90 
 		$(F90) -c $<
 
-driver.o: forward_b.f90 forward_diff.mod 
-forward_diff.mod: forward_b.o
+driver.o: forward_b.f90 forward_diff.mod forward_tgt.mod
+forward_diff.mod: forward_b.o 
+forward_tgt.mod: forward_d.o
 
 adBuffer.o: 
 		$(CC) -c $(POP_PUSH)/adBuffer.c
@@ -25,10 +26,11 @@ adStack.o :
 
 forward_b.f90: forward.f90
 		tapenade -reverse -head "forward_problem(V)/(xx)" forward.f90
-
+forward_d.f90: forward.f90
+		tapenade -tangent -tgtmodulename %_tgt -head "forward_problem(V)/(xx)" forward.f90
 # Useful phony targets
 
 .PHONY: clean
 
 clean:
-	$(RM) $(EXEC) *.o $(MOD) $(MSG) *.msg *.mod *_db.f90 *_b.f90 *_d.f90
+	$(RM) $(EXEC) *.o $(MOD) $(MSG) *.msg *.mod *_db.f90 *_b.f90 *_d.f90 *~
