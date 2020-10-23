@@ -17,8 +17,7 @@ program driver
 	xx = 0.
 	V = 0.
 	call forward_problem_b(xx,xxb,V,Vb)
-	print *,xxb
-	
+
 	print *, "#    Reverse    FD    Tangent    Relative accuracy"
 	!! Finite differences and Tangent Linear Model
 	do ii = 1, nx+1
@@ -29,7 +28,7 @@ program driver
 		xx_tlm(ii) = 1.
 
 		!! TLM
-		! call forward_problem_d(xx,xx_tlm,V,Vd)
+		!call forward_problem_d(xx,xx_tlm,V,Vd)
 
 
 		!! FD
