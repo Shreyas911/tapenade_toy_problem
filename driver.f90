@@ -1,7 +1,10 @@
 program driver
+	!!Essentially both modules had variables with the same name
+	!!so they had to be locally aliased for the code to compile and run
+	!!Obviously only one set of variables is needed so the other is useless
 	
 	use forward_diff, n => nx, fp => forward_problem !! Alias to a local variable
-	use forward_tgt, n_useless => nx, fp_useless => forward_problem
+	use forward_tgt, n_useless => nx, fp_useless => forward_problem 
 
 	implicit none 
 
@@ -21,7 +24,14 @@ program driver
 	V = 0.
 	call forward_problem_b(xx,xxb,V,Vb)
 
-	print *, "#    Reverse    FD    Tangent    Relative accuracy"
+
+	open (unit = 1, file = "results.txt", status = "new")
+
+	write(1,*) "         #                Reverse                           FD",&
+			"                          Tangent                     Relative accuracy"
+	write(1,*) "___________________________________________________________________",&
+			"___________________________________________________________"
+
 	!! Finite differences and Tangent Linear Model
 	do ii = 1, n+1
 
@@ -46,7 +56,9 @@ program driver
         else
             accuracy(ii) = 0.
         end if
-        print *, ii, "    ", xxb(ii), "    ", xx_fd(ii),"    ", Vd,"    ", accuracy(ii)
+        write(1,*) ii, "    ", xxb(ii), "    ", xx_fd(ii),"    ", Vd,"    ", accuracy(ii)
 	end do
+
+	close(1)
 end program driver
 
