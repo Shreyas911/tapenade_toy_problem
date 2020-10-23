@@ -25,7 +25,7 @@ program driver
 	call forward_problem_b(xx,xxb,V,Vb)
 
 
-	open (unit = 1, file = "results.txt", status = "new")
+	open (unit = 1, file = "results.txt", action="write",status="replace")
 
 	write(1,*) "         #                Reverse                           FD",&
 			"                          Tangent                     Relative accuracy"
@@ -60,5 +60,7 @@ program driver
 	end do
 
 	close(1)
+
+	call execute_command_line('gnuplot plot.script')
 end program driver
 
