@@ -57,10 +57,22 @@ contains
 		end do
 
 		V = 0.
-		do i = 1, size(h_capital(:,nt+1))
-           V = V + h_capital(i,nt+1)*dx
-        end do
 
+
+		open (unit = 2, file = "results_forward_run.txt", action="write",status="replace")
+	        write(2,*) "         #                H                h                  b"
+	        write(2,*) "_______________________________________________________________________________"
+
+		do i = 1, size(h_capital(:,nt+1))
+      	   	     V = V + h_capital(i,nt+1)*dx
+
+		     write(2,*) i, "    ", h_capital(i,nt+1), "    ", h(i,nt+1), "    ", b(i)
+       		end do
+
+
+
+ 
+	close(2)
 	end subroutine forward_problem
 
 end module forward
