@@ -2,5 +2,4 @@
 *.mod
 *.msg
 adjoint
-pop_push/
 .DS_STORE
