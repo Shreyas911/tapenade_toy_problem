@@ -21,7 +21,6 @@ program driver
 
 	!! Adjoint run
 	xx = 0.
-	call fp(xx,V)
 	call forward_problem_b(xx,xxb,V,Vb)
 
 
@@ -41,7 +40,6 @@ program driver
 		xx_tlm(ii) = 1.
 
 		!! TLM
-		call fp(xx, V)
 		call forward_problem_d(xx,xx_tlm,V,Vd)
 
 
