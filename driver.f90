@@ -41,6 +41,7 @@ program driver
 		xx_tlm(ii) = 1.
 
 		!! TLM
+		call fp(xx, V)
 		call forward_problem_d(xx,xx_tlm,V,Vd)
 
 
