@@ -21,7 +21,7 @@ program driver
 
 	!! Adjoint run
 	xx = 0.
-	V = 0.
+	call fp(xx,V)
 	call forward_problem_b(xx,xxb,V,Vb)
 
 
