@@ -43,6 +43,7 @@ contains
 		h_capital(nx+1,:) = h(nx+1,:) - b(nx+1)
 		h_capital(:,1) = h(:,1) - b
 
+		!$AD BINOMIAL-CKP nt+1 20 1
 		do t = 1,nt
 			D(:) = C * ((h_capital(1:nx,t)+h_capital(2:nx+1,t))/2)**(n+2) * ((h(2:nx+1,t) - h(1:nx,t))/dx)**(n-1)
 			phi(:) = -D(:)*(h(2:nx+1,t)-h(1:nx,t))/dx

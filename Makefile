@@ -9,7 +9,7 @@ POP_PUSH:= ./pop_push
 
 # Rules
 
-$(EXEC): $(OBJ) adStack.o forward_b.o forward_d.o
+$(EXEC): $(OBJ) adStack.o adBinomial.o forward_b.o forward_d.o
 		$(F90) -o $@ $^
 
 %.o: %.f90 
@@ -18,6 +18,9 @@ $(EXEC): $(OBJ) adStack.o forward_b.o forward_d.o
 driver.o: forward_b.f90 forward_diff.mod forward_tgt.mod
 forward_diff.mod: forward_b.o 
 forward_tgt.mod: forward_d.o
+
+adBinomial.o:
+		$(CC) -c $(POP_PUSH)/adBinomial.c
 
 adStack.o : 
 		$(CC) -c $(POP_PUSH)/adStack.c
